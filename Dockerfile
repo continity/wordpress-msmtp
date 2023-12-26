@@ -1,4 +1,4 @@
-FROM wordpress:6.4
+FROM wordpress:6.4.2
 
 # Install msmtp for mail forwarding to another SMTP server
 # /etc/msmtprc configuration file needs to be mapped into the container
