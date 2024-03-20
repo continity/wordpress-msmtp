@@ -35,15 +35,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
+        uses: sigstore/cosign-installer@v3.3.0
         with:
-          cosign-release: 'v2.1.1'
+          cosign-release: 'v2.2.2'
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
@@ -96,3 +96,7 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+        
+      # Run Webhook to ensure update of the image in portainer
+      # - name: Init webhook
+      #  run: curl -X POST https://portainer.continity.io/api/webhooks/366f1eb7-3aac-414e-b3d3-cfda3d52d9e4
